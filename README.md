@@ -15,7 +15,7 @@ This README is structured to meet the mandatory requirements for **Round 1** of 
 
 
 * 
-**Project Proposal Document**: [Link to full PDF/Markdown in this repo] 
+**Project Proposal Document**: [1770784527853-479984986.pdf] 
 
 
 
