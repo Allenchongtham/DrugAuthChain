@@ -15,7 +15,7 @@ This README is structured to meet the mandatory requirements for **Round 1** of 
 
 
 * 
-**Project Proposal Document**: [1770784527853-479984986.pdf] 
+**Project Proposal Document**: [project proposal](https://github.com/Allenchongtham/DrugAuthChain/blob/main/1770784527853-479984986.pdf)
 
 
 
