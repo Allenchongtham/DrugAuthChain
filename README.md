@@ -7,10 +7,10 @@
 
 ## Submission Links
 
-- **Round 1 Concept Video:** [proposal video](https://drive.google.com/file/d/1AD_LOIG-bt_lQ9AQ2detqqCPlQJz3jm3/view?usp=drive_link)
-- **project statement** [github](https://github.com/Allenchongtham/DrugAuthChain/blob/main/PROJECT%20PROPOSAL%20(1).pdf) [drive](https://drive.google.com/file/d/1r9kMC28NDWWYCC-FOrwEHFFgk1zJuTNd/view?usp=drive_link)
-- **proposed solution** [github](https://github.com/Allenchongtham/DrugAuthChain/blob/main/PROJECT%20PROPOSAL%20(1).pdf) [drive](https://drive.google.com/file/d/1r9kMC28NDWWYCC-FOrwEHFFgk1zJuTNd/view?usp=drive_link)
-- **project proposal** [github](https://github.com/Allenchongtham/DrugAuthChain/blob/main/PROJECT%20PROPOSAL%20(1).pdf) [drive](https://drive.google.com/file/d/1r9kMC28NDWWYCC-FOrwEHFFgk1zJuTNd/view?usp=drive_link)
+- **Round 1 Concept Video:** [proposal video](https://drive.google.com/file/d/1AD_LOIG-bt_lQ9AQ2detqqCPlQJz3jm3/view?usp=sharing)
+- **project statement** [github](https://github.com/Allenchongtham/DrugAuthChain/blob/main/PROJECT%20PROPOSAL%20(1).pdf) [drive](https://drive.google.com/file/d/1r9kMC28NDWWYCC-FOrwEHFFgk1zJuTNd/view?usp=sharing)
+- **proposed solution** [github](https://github.com/Allenchongtham/DrugAuthChain/blob/main/PROJECT%20PROPOSAL%20(1).pdf) [drive](https://drive.google.com/file/d/1r9kMC28NDWWYCC-FOrwEHFFgk1zJuTNd/view?usp=sharing)
+- **project proposal** [github](https://github.com/Allenchongtham/DrugAuthChain/blob/main/PROJECT%20PROPOSAL%20(1).pdf) [drive](https://drive.google.com/file/d/1r9kMC28NDWWYCC-FOrwEHFFgk1zJuTNd/view?usp=sharing)
 
 ---
 
