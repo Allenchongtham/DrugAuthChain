@@ -11,6 +11,8 @@
 - **project statement** [github](https://github.com/Allenchongtham/DrugAuthChain/blob/main/PROJECT%20PROPOSAL%20(1).pdf) [drive](https://drive.google.com/file/d/1r9kMC28NDWWYCC-FOrwEHFFgk1zJuTNd/view?usp=sharing)
 - **proposed solution** [github](https://github.com/Allenchongtham/DrugAuthChain/blob/main/PROJECT%20PROPOSAL%20(1).pdf) [drive](https://drive.google.com/file/d/1r9kMC28NDWWYCC-FOrwEHFFgk1zJuTNd/view?usp=sharing)
 - **project proposal** [github](https://github.com/Allenchongtham/DrugAuthChain/blob/main/PROJECT%20PROPOSAL%20(1).pdf) [drive](https://drive.google.com/file/d/1r9kMC28NDWWYCC-FOrwEHFFgk1zJuTNd/view?usp=sharing)
+- **roadmap** [github](https://github.com/Allenchongtham/DrugAuthChain/blob/main/ROADMAP.pdf) [drive](https://drive.google.com/file/d/1xHgHZe5CCtq9fDrFKs9tBaKue4sh_rdK/view?usp=sharing)
+- **tech stack** [github](https://github.com/Allenchongtham/DrugAuthChain/blob/main/TECH%20STACK.pdf) [drive](https://drive.google.com/file/d/1XUHGJ1mgc4dcWyH7iBWytsqn3ehXLxsR/view?usp=sharing)
 
 ---
 
