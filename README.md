@@ -26,7 +26,7 @@ Counterfeit medicines are a global crisis. Consumers have no reliable way to ver
 
 ## Our Solution
 
-DrugAuthChain is a hybrid blockchain-powered mobile app that gives consumers instant, tamper-proof medicine verification — and automatically invalidates any QR code the moment it's scanned.
+DrugAuthChain is a hybrid blockchain-powered app that gives consumers instant, tamper-proof medicine verification — and automatically invalidates any QR code the moment it's scanned.
 
 The core innovation is our **"Burn on Scan"** mechanism:
 
@@ -38,36 +38,33 @@ Once a package is scanned and verified, **no counterfeiter can refill and resell
 
 ---
 
-## Key Features
+## Completed Features
 
-| Feature | Description |
-|---|---|
-| Burn on Scan | Single-use QR verification that invalidates itself on first legitimate scan |
-| Visual Feedback | Lottie animations give instant, language-agnostic results (green / red) |
-| Counterfeit Heatmap | Admin dashboard visualizing global fake-scan hotspots for supply chain investigation |
-| Offline Verification | Pre-loaded public keys allow signature verification even without internet access |
+| # | Feature | Status |
+|---|---|---|
+| 1 | `DrugAuth.sol` smart contract with `registerMedicine` + `verifyAndBurn` | ✅ Done |
+| 2 | Hardhat local blockchain for development and demo | ✅ Done |
+| 3 | Mock manufacturer script — registers 5 medicines and generates QR PNGs | ✅ Done |
+| 4 | React consumer web app with MetaMask wallet connection | ✅ Done |
+| 5 | QR code scanning via image upload (jsQR, canvas-based) | ✅ Done |
+| 6 | Burn-on-scan transaction flow via ethers.js | ✅ Done |
+| 7 | Green / Red visual feedback screen (Authentic vs Fake/Used) | ✅ Done |
+| 8 | Deployment support for Polygon Amoy via Tenderly Virtual TestNet | ✅ Done |
 
 ---
 
 ## Architecture Overview
 
 ```
-Manufacturer App          Consumer App           Admin Dashboard
-      │                        │                        │
-      │  Input Batch ID        │  Scan QR Code          │  View Heatmap
-      ▼                        ▼                        ▼
- Flutter Frontend ──────── Flutter Frontend ──── Leaflet.js Map
-      │                        │                        │
-      │  Ethers.js             │  Ethers.js             │  Firebase
-      ▼                        ▼                        ▼
- Smart Contract  ◄──────── Smart Contract          Fake Scan Logs
- (Polygon Amoy)            (Polygon Amoy)
-      │
-      ▼
-   IPFS Storage
- (Batch Metadata)
+Manufacturer Script           Consumer Web App
+       │                             │
+  mint.js (Node)              React + ethers.js
+       │                             │
+       │  registerMedicine()         │  verifyAndBurn()
+       ▼                             ▼
+  DrugAuth.sol  ◄──────── DrugAuth.sol
+  (Hardhat / Amoy)         (Hardhat / Amoy)
 ```
-![WhatsApp Image 2026-02-17 at 10 06 32 PM](https://github.com/user-attachments/assets/dad9f34a-cf9b-46b6-90f8-6cd945dd9f97)
 
 ---
 
@@ -75,32 +72,152 @@ Manufacturer App          Consumer App           Admin Dashboard
 
 | Layer | Technology |
 |---|---|
-| Mobile App | Flutter (Dart) — iOS & Android |
-| Blockchain | Polygon Amoy Testnet |
-| Smart Contracts | Solidity + Hardhat |
-| QR Scanning | Google ML Kit (on-device, offline-capable) |
-| Backend | Firebase (auth, logs, alerts) |
-| Decentralized Storage | IPFS |
-| Analytics | Leaflet.js |
+| Smart Contracts | Solidity 0.8.24 + Hardhat |
+| Blockchain (local) | Hardhat Network (Chain ID 31337) |
+| Blockchain (testnet) | Polygon Amoy via Tenderly Virtual TestNet |
+| Frontend | React 18 + Vite |
+| Web3 | ethers.js v6 |
+| QR Scanning | jsQR (canvas-based, no camera needed) |
+| QR Generation | qrcode (npm) |
+
+---
+
+## Local Development Setup
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org) v18+
+- [MetaMask](https://metamask.io/download) browser extension
+
+### 1. Install dependencies
+
+```bash
+# Root (Hardhat + scripts)
+npm install
+
+# Frontend
+cd client && npm install && cd ..
+```
+
+### 2. Start the local blockchain
+
+Run this in a **dedicated terminal** and keep it open:
+
+```bash
+npm run node
+```
+
+You'll see 20 accounts each with 10,000 ETH printed in the terminal.
+
+### 3. Deploy the smart contract
+
+```bash
+npm run deploy
+```
+
+This deploys `DrugAuth.sol` to localhost and saves the address to `deployed-address.txt`.
+
+> After deploying, update `CONTRACT_ADDRESS` in `client/src/App.jsx` with the address printed in the terminal.
+
+### 4. Register test medicines and generate QR codes
+
+```bash
+npm run mint
+```
+
+This registers 5 medicines on-chain and saves `test_qrs/qr_1.png` through `qr_5.png`.
+
+### 5. Start the frontend
+
+```bash
+cd client && npm run dev
+```
+
+Open `http://localhost:3000`.
+
+---
+
+## MetaMask Setup (one-time)
+
+### Add the Hardhat network
+
+1. Open MetaMask → click the network dropdown → **Add a network manually**
+2. Fill in:
+
+| Field | Value |
+|---|---|
+| Network name | `Hardhat Local` |
+| RPC URL | `http://127.0.0.1:8545` |
+| Chain ID | `31337` |
+| Currency symbol | `ETH` |
+
+3. Click **Save**
+
+### Import a funded test account
+
+1. MetaMask → click the account icon (top right) → **Add account or hardware wallet** → **Import account**
+2. Paste this private key (Hardhat Account #0):
+```
+0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
+```
+3. Click **Import** — the account will show 10,000 ETH
+
+> This is a publicly known test key. Never use it on a real network.
+
+### Switch to Hardhat Local
+
+Make sure MetaMask is switched to the **Hardhat Local** network before connecting the app.
+
+---
+
+## Demo Flow
+
+| Test | Action | Expected Result |
+|---|---|---|
+| Happy path | Upload `qr_1.png` → Confirm in MetaMask | Screen turns **GREEN** — Authentic |
+| Already used | Upload `qr_1.png` again | Screen turns **RED** — Already burned |
+| Fake QR | Upload any random QR from the internet | Screen turns **RED** — Not registered |
+
+---
+
+## Project Structure
+
+```
+DrugAuthChain/
+├── contracts/
+│   └── DrugAuth.sol          # Smart contract
+├── scripts/
+│   ├── deploy.js             # Deploy to localhost or Amoy
+│   ├── mint.js               # Register medicines + generate QR PNGs
+│   └── generate-wallet.js    # One-time deployer wallet generator
+├── client/
+│   ├── src/
+│   │   ├── App.jsx           # Main consumer UI
+│   │   └── main.jsx
+│   ├── index.html
+│   └── package.json
+├── hardhat.config.js
+├── .env.example              # Copy to .env and fill in for testnet deploy
+└── package.json
+```
 
 ---
 
 ## Roadmap
 
-**Phase 1 — Qualifying Round** *(In Progress)*
-- [ ] Finalize user flow and system architecture
-- [ ] Set up Flutter + Hardhat development environment
-- [ ] Write and deploy Solidity smart contracts (`registerMedicine`, `verifyMedicine`)
-- [ ] Build Manufacturer Dashboard with Ethers.js integration
-- [ ] Set up Firebase for non-blockchain data
+**Phase 1 — MVP (Complete)**
+- [x] Write and deploy Solidity smart contract (`registerMedicine`, `verifyAndBurn`)
+- [x] Build mock manufacturer script with QR code generation
+- [x] Build consumer web app with burn-on-scan verification
+- [x] Green / Red visual feedback
 
 **Phase 2 — Final Excellence Round**
-- [ ] Integrate Google ML Kit QR scanner + Burn on Scan logic
+- [ ] Integrate Google ML Kit QR scanner + live camera scanning
 - [ ] Design result screens with Lottie animations
-- [ ] Build Leaflet.js Admin Heatmap
+- [ ] Build Leaflet.js Admin Heatmap for fake-scan hotspots
 - [ ] Implement offline verification
-- [ ] Edge-case testing + bug fixing
-- [ ] Create physical demo props and record final demo video
+- [ ] Deploy to Polygon Amoy mainnet
+- [ ] Record final demo video
 
 ---
 
@@ -120,6 +237,4 @@ Manufacturer App          Consumer App           Admin Dashboard
 
 ---
 
-
-
-> *Built for hackathon submission — DrugAuthChain is currently deployed on Polygon Amoy Testnet.*
+> *Built for hackathon submission — DrugAuthChain MVP running on Hardhat local network.*

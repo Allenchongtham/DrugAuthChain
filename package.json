@@ -1,0 +1,21 @@
+{
+  "name": "drugauthchain",
+  "version": "1.0.0",
+  "description": "DrugAuthChain MVP - Decentralized Anti-Counterfeit Medicine Protocol",
+  "scripts": {
+    "node": "npx hardhat node",
+    "deploy": "npx hardhat run scripts/deploy.js --network localhost",
+    "deploy:amoy": "npx hardhat run scripts/deploy.js --network amoy",
+    "mint": "node scripts/mint.js"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "hardhat": "^2.22.0"
+  },
+  "dependencies": {
+    "dotenv": "^17.3.1",
+    "ethers": "^6.13.0",
+    "qrcode": "^1.5.4",
+    "uuid": "^11.0.0"
+  }
+}
