@@ -1,0 +1,7 @@
+node_modules
+.env
+deployed-address.txt
+test_qrs/
+artifacts/
+cache/
+client/dist/
