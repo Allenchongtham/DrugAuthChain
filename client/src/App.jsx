@@ -2,9 +2,11 @@ import { useState, useRef } from "react";
 import { ethers } from "ethers";
 import jsQR from "jsqr";
 
-// ── Update this after running `npm run deploy` ──────────────────────────────
-const CONTRACT_ADDRESS = "0x0165878A594ca255338adfa4d48449f69242Eb8F";
-// ────────────────────────────────────────────────────────────────────────────
+const CONTRACT_ADDRESS = import.meta.env.VITE_CONTRACT_ADDRESS;
+
+if (!CONTRACT_ADDRESS) {
+  console.error("VITE_CONTRACT_ADDRESS is not set. Run `npm run deploy` from the project root, then restart the Vite dev server.");
+}
 
 const ABI = [
   "function verifyAndBurn(string calldata uuid) external",
@@ -37,6 +39,29 @@ export default function App() {
     }
     setStatus(STATUS.CONNECTING);
     try {
+      // Force MetaMask to switch to Hardhat Local (chain ID 31337 = 0x7A69)
+      try {
+        await window.ethereum.request({
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId: "0x7A69" }],
+        });
+      } catch (switchErr) {
+        // Chain not added yet — add it automatically
+        if (switchErr.code === 4902) {
+          await window.ethereum.request({
+            method: "wallet_addEthereumChain",
+            params: [{
+              chainId: "0x7A69",
+              chainName: "Hardhat Local",
+              rpcUrls: ["http://127.0.0.1:8545"],
+              nativeCurrency: { name: "ETH", symbol: "ETH", decimals: 18 },
+            }],
+          });
+        } else {
+          throw switchErr;
+        }
+      }
+
       const provider = new ethers.BrowserProvider(window.ethereum);
       await provider.send("eth_requestAccounts", []);
       const signer = await provider.getSigner();
@@ -159,6 +184,16 @@ export default function App() {
         </h1>
         <p style={{ color: "#888", marginTop: "0.4rem" }}>Scan once. Trust forever. Protect lives.</p>
       </div>
+
+      {/* Missing contract address warning */}
+      {!CONTRACT_ADDRESS && (
+        <div style={{ background: "#7f1d1d", border: "1px solid #ef4444", borderRadius: 8, padding: "1rem 1.5rem", marginBottom: "1.5rem", maxWidth: 500, textAlign: "center" }}>
+          <p style={{ color: "#fca5a5", fontWeight: 600 }}>Contract address not configured</p>
+          <p style={{ color: "#fca5a5", fontSize: "0.85rem", marginTop: "0.4rem" }}>
+            Run <code style={{ background: "#450a0a", padding: "0.15rem 0.4rem", borderRadius: 4 }}>npm run deploy</code> from the project root, then restart this dev server.
+          </p>
+        </div>
+      )}
 
       {/* Wallet */}
       <div style={{ marginBottom: "1.5rem" }}>

@@ -5,3 +5,4 @@ test_qrs/
 artifacts/
 cache/
 client/dist/
+client/.env.local
