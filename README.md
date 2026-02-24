@@ -115,9 +115,7 @@ You'll see 20 accounts each with 10,000 ETH printed in the terminal.
 npm run deploy
 ```
 
-This deploys `DrugAuth.sol` to localhost and saves the address to `deployed-address.txt`.
-
-> After deploying, update `CONTRACT_ADDRESS` in `client/src/App.jsx` with the address printed in the terminal.
+This deploys `DrugAuth.sol` to localhost and automatically updates the frontend contract address in `client/.env.local`.
 
 ### 4. Register test medicines and generate QR codes
 
@@ -129,11 +127,15 @@ This registers 5 medicines on-chain and saves `test_qrs/qr_1.png` through `qr_5.
 
 ### 5. Start the frontend
 
+> **Important:** Start the frontend **after** deploying so it picks up the correct contract address.
+
 ```bash
 cd client && npm run dev
 ```
 
 Open `http://localhost:3000`.
+
+> If you redeploy the contract while the frontend is running, you must **restart the Vite dev server** for it to pick up the new address.
 
 ---
 
@@ -167,6 +169,15 @@ Open `http://localhost:3000`.
 ### Switch to Hardhat Local
 
 Make sure MetaMask is switched to the **Hardhat Local** network before connecting the app.
+
+### Clear MetaMask cache (important!)
+
+Every time you restart the Hardhat node, MetaMask caches stale nonces and chain data from the previous session. This causes transactions to hang or fail silently.
+
+**After every Hardhat node restart:**
+
+1. MetaMask → Settings → Advanced → **Clear activity tab data**
+2. This resets cached nonces so transactions work correctly against the fresh node
 
 ---
 
@@ -203,23 +214,6 @@ DrugAuthChain/
 
 ---
 
-## Roadmap
-
-**Phase 1 — MVP (Complete)**
-- [x] Write and deploy Solidity smart contract (`registerMedicine`, `verifyAndBurn`)
-- [x] Build mock manufacturer script with QR code generation
-- [x] Build consumer web app with burn-on-scan verification
-- [x] Green / Red visual feedback
-
-**Phase 2 — Final Excellence Round**
-- [ ] Integrate Google ML Kit QR scanner + live camera scanning
-- [ ] Design result screens with Lottie animations
-- [ ] Build Leaflet.js Admin Heatmap for fake-scan hotspots
-- [ ] Implement offline verification
-- [ ] Deploy to Polygon Amoy mainnet
-- [ ] Record final demo video
-
----
 
 ## Team — ALGAERITHM
 
